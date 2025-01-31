@@ -690,3 +690,919 @@ This test checks that the `hashCode` method returns different values for two `Re
 ### Execution Report: `PASSED`
 
 ---
+
+## Test `InventoryTest::testDefaultValues`
+### Test ID: `39`
+### Method
+```java
+@Test
+public void testDefaultValues() {
+    assertEquals(15, inventory.getCoffee());
+    assertEquals(15, inventory.getMilk());
+    assertEquals(15, inventory.getSugar());
+    assertEquals(15, inventory.getChocolate());
+}
+```
+
+### Purpose
+This test verifies that a newly created `Inventory` object initializes its attributes with default values. Specifically, it checks that the coffee, milk, sugar, and chocolate amounts are all set to 15.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testSetCoffeeValid`
+### Test ID: `40`
+### Method
+```java
+@Test
+public void testSetCoffeeValid() {
+    inventory.setCoffee(10);
+    assertEquals(10, inventory.getCoffee(), "Coffee should be set to 10");
+}
+```
+
+### Purpose
+This test ensures that the `setCoffee` method correctly updates the coffee amount when a valid positive integer is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testSetCoffeeNegative`
+### Test ID: `41`
+### Method
+```java
+@Test
+public void testSetCoffeeNegative() {
+    inventory.setCoffee(-5);
+    assertEquals(15, inventory.getCoffee(), "Coffee should remain unchanged when set to a negative value");
+}
+```
+
+### Purpose
+This test checks that the `setCoffee` method ignores negative values and retains the default coffee amount.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testSetCoffeeZero`
+### Test ID: `42`
+### Method
+```java
+@Test
+public void testSetCoffeeZero() {
+    inventory.setCoffee(0);
+    assertEquals(0, inventory.getCoffee(), "Coffee should be set to 0");
+}
+```
+
+### Purpose
+This test verifies that the `setCoffee` method correctly handles a zero value.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddCoffeeValid`
+### Test ID: `43`
+### Method
+```java
+@Test
+public void testAddCoffeeValid() throws InventoryException {
+    inventory.addCoffee("5");
+    assertEquals(20, inventory.getCoffee(), "Coffee should increase by 5");
+}
+```
+
+### Purpose
+This test ensures that the `addCoffee` method correctly increases the coffee amount when a valid integer string is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddCoffeeZero`
+### Test ID: `44`
+### Method
+```java
+@Test
+public void testAddCoffeeZero() throws InventoryException {
+    inventory.addCoffee("0");
+    assertEquals(15, inventory.getCoffee(), "Coffee should remain unchanged when adding 0");
+}
+```
+
+### Purpose
+This test checks that the `addCoffee` method does not change the coffee amount when a zero value is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddCoffeeNegativeValue`
+### Test ID: `45`
+### Method
+```java
+@Test
+public void testAddCoffeeNegativeValue() {
+    Exception exception = assertThrows(InventoryException.class, () -> inventory.addCoffee("-10"), "Adding negative coffee should fail");
+    assertEquals("Units of coffee must be a positive integer", exception.getMessage());
+    assertEquals(15, inventory.getCoffee(), "Coffee should remain unchanged when adding a negative value");
+}
+```
+
+### Purpose
+This test verifies that the `addCoffee` method throws an `InventoryException` when a negative value is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddCoffeeInvalidFormat`
+### Test ID: `46`
+### Method
+```java
+@Test
+public void testAddCoffeeInvalidFormat() {
+    Exception exception = assertThrows(InventoryException.class, () -> inventory.addCoffee("abc"), "Invalid Format Coffee Should Fail");
+    assertEquals("Units of coffee must be a positive integer", exception.getMessage());
+    assertEquals(15, inventory.getCoffee(), "Coffee should remain unchanged when adding an invalid string");
+}
+```
+
+### Purpose
+This test ensures that the `addCoffee` method throws an `InventoryException` when an invalid format (non-integer string) is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddCoffeeDecimalValue`
+### Test ID: `47`
+### Method
+```java
+@Test
+public void testAddCoffeeDecimalValue() {
+    Exception exception = assertThrows(InventoryException.class, () -> inventory.addCoffee("10.5"), "Adding decimal coffee should fail");
+    assertEquals("Units of coffee must be a positive integer", exception.getMessage());
+    assertEquals(15, inventory.getCoffee(), "Coffee should remain unchanged when adding a decimal value");
+}
+```
+
+### Purpose
+This test checks that the `addCoffee` method throws an `InventoryException` when a decimal value is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testSetMilkValid`
+### Test ID: `48`
+### Method
+```java
+@Test
+public void testSetMilkValid() {
+    inventory.setMilk(10);
+    assertEquals(10, inventory.getMilk(), "Milk should be set to 10");
+}
+```
+
+### Purpose
+This test ensures that the `setMilk` method correctly updates the milk amount when a valid positive integer is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testSetMilkNegative`
+### Test ID: `49`
+### Method
+```java
+@Test
+public void testSetMilkNegative() {
+    inventory.setMilk(-5);
+    assertEquals(15, inventory.getMilk(), "Milk should remain unchanged when set to a negative value");
+}
+```
+
+### Purpose
+This test verifies that the `setMilk` method ignores negative values and retains the default milk amount.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testSetMilkZero`
+### Test ID: `50`
+### Method
+```java
+@Test
+public void testSetMilkZero() {
+    inventory.setMilk(0);
+    assertEquals(0, inventory.getMilk(), "Milk should be set to 0");
+}
+```
+
+### Purpose
+This test checks that the `setMilk` method correctly handles a zero value.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddMilkValid`
+### Test ID: `51`
+### Method
+```java
+@Test
+public void testAddMilkValid() throws InventoryException {
+    inventory.addMilk("5");
+    assertEquals(20, inventory.getMilk(), "Milk should increase by 5");
+}
+```
+
+### Purpose
+This test ensures that the `addMilk` method correctly increases the milk amount when a valid integer string is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddMilkZero`
+### Test ID: `52`
+### Method
+```java
+@Test
+public void testAddMilkZero() throws InventoryException {
+    inventory.addMilk("0");
+    assertEquals(15, inventory.getMilk(), "Milk should remain unchanged when adding 0");
+}
+```
+
+### Purpose
+This test verifies that the `addMilk` method does not change the milk amount when a zero value is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddMilkNegative`
+### Test ID: `53`
+### Method
+```java
+@Test
+public void testAddMilkNegative() {
+    Exception exception = assertThrows(InventoryException.class, () -> inventory.addMilk("-5"), "Negative Milk Should Fail");
+    assertEquals("Units of milk must be a positive integer", exception.getMessage());
+    assertEquals(15, inventory.getMilk(), "Milk should remain unchanged when adding a negative value");
+}
+```
+
+### Purpose
+This test checks that the `addMilk` method throws an `InventoryException` when a negative value is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddMilkInvalidFormat`
+### Test ID: `54`
+### Method
+```java
+@Test
+public void testAddMilkInvalidFormat() {
+    Exception exception = assertThrows(InventoryException.class, () -> inventory.addMilk("abc"), "Invalid Format Milk Should Fail");
+    assertEquals("Units of milk must be a positive integer", exception.getMessage());
+    assertEquals(15, inventory.getMilk(), "Milk should remain unchanged when adding an invalid string");
+}
+```
+
+### Purpose
+This test ensures that the `addMilk` method throws an `InventoryException` when an invalid format (non-integer string) is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddMilkDecimalValue`
+### Test ID: `55`
+### Method
+```java
+@Test
+public void testAddMilkDecimalValue() {
+    Exception exception = assertThrows(InventoryException.class, () -> inventory.addMilk("5.5"), "Decimal Milk Should Fail");
+    assertEquals("Units of milk must be a positive integer", exception.getMessage());
+    assertEquals(15, inventory.getMilk(), "Milk should remain unchanged when adding a decimal value");
+}
+```
+
+### Purpose
+This test verifies that the `addMilk` method throws an `InventoryException` when a decimal value is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testSetSugarValid`
+### Test ID: `56`
+### Method
+```java
+@Test
+public void testSetSugarValid() {
+    inventory.setSugar(10);
+    assertEquals(10, inventory.getSugar(), "Sugar should be set to 10");
+}
+```
+
+### Purpose
+This test ensures that the `setSugar` method correctly updates the sugar amount when a valid positive integer is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testSetSugarNegative`
+### Test ID: `57`
+### Method
+```java
+@Test
+public void testSetSugarNegative() {
+    inventory.setSugar(-5);
+    assertEquals(15, inventory.getSugar(), "Sugar should remain unchanged when set to a negative value");
+}
+```
+
+### Purpose
+This test checks that the `setSugar` method ignores negative values and retains the default sugar amount.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testSetSugarZero`
+### Test ID: `58`
+### Method
+```java
+@Test
+public void testSetSugarZero() {
+    inventory.setSugar(0);
+    assertEquals(0, inventory.getSugar(), "Sugar should be set to 0");
+}
+```
+
+### Purpose
+This test verifies that the `setSugar` method correctly handles a zero value.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddSugarValid`
+### Test ID: `59`
+### Method
+```java
+@Test
+public void testAddSugarValid() {
+    try {
+        inventory.addSugar("5");
+    } catch (InventoryException e) {
+        fail("Adding sugar should not throw an exception");
+    }
+    assertEquals(20, inventory.getSugar(), "Sugar should increase by 5");
+}
+```
+
+### Purpose
+This test ensures that the `addSugar` method correctly increases the sugar amount when a valid integer string is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddSugarZero`
+### Test ID: `60`
+### Method
+```java
+@Test
+public void testAddSugarZero() {
+    try {
+        inventory.addSugar("0");
+    } catch (InventoryException e) {
+        fail("Adding sugar should not throw an exception");
+    }
+    assertEquals(15, inventory.getSugar(), "Sugar should remain unchanged when adding 0");
+}
+```
+
+### Purpose
+This test checks that the `addSugar` method does not change the sugar amount when a zero value is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddSugarNegativeValue`
+### Test ID: `61`
+### Method
+```java
+@Test
+public void testAddSugarNegativeValue() {
+    Exception exception = assertThrows(InventoryException.class, () -> inventory.addSugar("-10"), "Adding negative sugar should fail");
+    assertEquals("Units of sugar must be a positive integer", exception.getMessage());
+    assertEquals(15, inventory.getSugar(), "Sugar should remain unchanged when adding a negative value");
+}
+```
+
+### Purpose
+This test verifies that the `addSugar` method throws an `InventoryException` when a negative value is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddSugarInvalidFormat`
+### Test ID: `62`
+### Method
+```java
+@Test
+public void testAddSugarInvalidFormat() {
+    Exception exception = assertThrows(InventoryException.class, () -> inventory.addSugar("abc"), "Invalid Format Sugar Should Fail");
+    assertEquals("Units of sugar must be a positive integer", exception.getMessage());
+    assertEquals(15, inventory.getSugar(), "Sugar should remain unchanged when adding an invalid string");
+}
+```
+
+### Purpose
+This test ensures that the `addSugar` method throws an `InventoryException` when an invalid format (non-integer string) is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddSugarDecimalValue`
+### Test ID: `63`
+### Method
+```java
+@Test
+public void testAddSugarDecimalValue() {
+    Exception exception = assertThrows(InventoryException.class, () -> inventory.addSugar("10.5"), "Adding decimal sugar should fail");
+    assertEquals("Units of sugar must be a positive integer", exception.getMessage());
+    assertEquals(15, inventory.getSugar(), "Sugar should remain unchanged when adding a decimal value");
+}
+```
+
+### Purpose
+This test checks that the `addSugar` method throws an `InventoryException` when a decimal value is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testSetChocolateValid`
+### Test ID: `64`
+### Method
+```java
+@Test
+public void testSetChocolateValid() {
+    inventory.setChocolate(10);
+    assertEquals(10, inventory.getChocolate(), "Chocolate should be set to 10");
+}
+```
+
+### Purpose
+This test ensures that the `setChocolate` method correctly updates the chocolate amount when a valid positive integer is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testSetChocolateNegative`
+### Test ID: `65`
+### Method
+```java
+@Test
+public void testSetChocolateNegative() {
+    inventory.setChocolate(-5);
+    assertEquals(15, inventory.getChocolate(), "Chocolate should remain unchanged when set to a negative value");
+}
+```
+
+### Purpose
+This test verifies that the `setChocolate` method ignores negative values and retains the default chocolate amount.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testSetChocolateZero`
+### Test ID: `66`
+### Method
+```java
+@Test
+public void testSetChocolateZero() {
+    inventory.setChocolate(0);
+    assertEquals(0, inventory.getChocolate(), "Chocolate should be set to 0");
+}
+```
+
+### Purpose
+This test checks that the `setChocolate` method correctly handles a zero value.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddChocolateValid`
+### Test ID: `67`
+### Method
+```java
+@Test
+public void testAddChocolateValid() throws InventoryException {
+    inventory.addChocolate("5");
+    assertEquals(20, inventory.getChocolate(), "Chocolate should increase by 5");
+}
+```
+
+### Purpose
+This test ensures that the `addChocolate` method correctly increases the chocolate amount when a valid integer string is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddChocolateZero`
+### Test ID: `68`
+### Method
+```java
+@Test
+public void testAddChocolateZero() throws InventoryException {
+    inventory.addChocolate("0");
+    assertEquals(15, inventory.getChocolate(), "Chocolate should remain unchanged when adding 0");
+}
+```
+
+### Purpose
+This test verifies that the `addChocolate` method does not change the chocolate amount when a zero value is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddChocolateNegativeValue`
+### Test ID: `69`
+### Method
+```java
+@Test
+public void testAddChocolateNegativeValue() {
+    Exception exception = assertThrows(InventoryException.class,
+        () -> inventory.addChocolate("-5"),
+        "Adding negative chocolate should fail");
+    assertEquals("Units of chocolate must be a positive integer", exception.getMessage());
+    assertEquals(15, inventory.getChocolate(), "Chocolate should remain unchanged when adding a negative value");
+}
+```
+
+### Purpose
+This test checks that the `addChocolate` method throws an `InventoryException` when a negative value is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddChocolateInvalidFormat`
+### Test ID: `70`
+### Method
+```java
+@Test
+public void testAddChocolateInvalidFormat() {
+    Exception exception = assertThrows(InventoryException.class,
+        () -> inventory.addChocolate("abc"),
+        "Adding invalid format for chocolate should fail");
+    assertEquals("Units of chocolate must be a positive integer", exception.getMessage());
+    assertEquals(15, inventory.getChocolate(), "Chocolate should remain unchanged when adding an invalid string");
+}
+```
+
+### Purpose
+This test ensures that the `addChocolate` method throws an `InventoryException` when an invalid format (non-integer string) is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testAddChocolateDecimalValue`
+### Test ID: `71`
+### Method
+```java
+@Test
+public void testAddChocolateDecimalValue() {
+    Exception exception = assertThrows(InventoryException.class,
+        () -> inventory.addChocolate("10.5"),
+        "Adding decimal chocolate should fail");
+    assertEquals("Units of chocolate must be a positive integer", exception.getMessage());
+    assertEquals(15, inventory.getChocolate(), "Chocolate should remain unchanged when adding a decimal value");
+}
+```
+
+### Purpose
+This test verifies that the `addChocolate` method throws an `InventoryException` when a decimal value is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testEnoughIngredientsSufficient`
+### Test ID: `72`
+### Method
+```java
+@Test
+public void testEnoughIngredientsSufficient() {
+    try {
+        recipe.setAmtCoffee("5");
+        recipe.setAmtMilk("5");
+        recipe.setAmtSugar("5");
+        recipe.setAmtChocolate("5");
+    } catch (RecipeException e) {
+        fail("Adding ingredients should not throw an exception");
+    }
+    assertTrue(inventory.enoughIngredients(recipe), "Should return true when there are sufficient ingredients");
+}
+```
+
+### Purpose
+This test checks that the `enoughIngredients` method returns `true` when the inventory has sufficient ingredients for the recipe.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testEnoughIngredientsInsufficientCoffee`
+### Test ID: `73`
+### Method
+```java
+@Test
+public void testEnoughIngredientsInsufficientCoffee() {
+    try {
+        inventory.setCoffee(0);
+        recipe.setAmtCoffee("5");
+    } catch (RecipeException e) {
+        fail("Adding ingredients should not throw an exception");
+    }
+    assertFalse(inventory.enoughIngredients(recipe), "Should return false when coffee is insufficient");
+}
+```
+
+### Purpose
+This test verifies that the `enoughIngredients` method returns `false` when the coffee amount is insufficient for the recipe.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testEnoughIngredientsInsufficientMilk`
+### Test ID: `74`
+### Method
+```java
+@Test
+public void testEnoughIngredientsInsufficientMilk() {
+    try {
+        inventory.setMilk(0);
+        recipe.setAmtMilk("5");
+    } catch (RecipeException e) {
+        fail("Adding ingredients should not throw an exception");
+    }
+    assertFalse(inventory.enoughIngredients(recipe), "Should return false when milk is insufficient");
+}
+```
+
+### Purpose
+This test ensures that the `enoughIngredients` method returns `false` when the milk amount is insufficient for the recipe.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testEnoughIngredientsInsufficientSugar`
+### Test ID: `75`
+### Method
+```java
+@Test
+public void testEnoughIngredientsInsufficientSugar() {
+    try {
+        inventory.setSugar(0);
+        recipe.setAmtSugar("5");
+    } catch (RecipeException e) {
+        fail("Adding ingredients should not throw an exception");
+    }
+    assertFalse(inventory.enoughIngredients(recipe), "Should return false when sugar is insufficient");
+}
+```
+
+### Purpose
+This test checks that the `enoughIngredients` method returns `false` when the sugar amount is insufficient for the recipe.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testEnoughIngredientsInsufficientChocolate`
+### Test ID: `76`
+### Method
+```java
+@Test
+public void testEnoughIngredientsInsufficientChocolate() {
+    try {
+        inventory.setChocolate(0);
+        recipe.setAmtChocolate("5");
+    } catch (RecipeException e) {
+        fail("Adding ingredients should not throw an exception");
+    }
+    assertFalse(inventory.enoughIngredients(recipe), "Should return false when chocolate is insufficient");
+}
+```
+
+### Purpose
+This test verifies that the `enoughIngredients` method returns `false` when the chocolate amount is insufficient for the recipe.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testUseIngredientsSufficient`
+### Test ID: `77`
+### Method
+```java
+@Test
+public void testUseIngredientsSufficient() {
+    try {
+        recipe.setAmtCoffee("5");
+        recipe.setAmtMilk("5");
+        recipe.setAmtSugar("5");
+        recipe.setAmtChocolate("5");
+    } catch (RecipeException e) {
+        fail("Setting recipe amounts should not throw an exception");
+    }
+
+    assertAll("Inventory should have enough ingredients to make the recipe",
+        () -> assertTrue(inventory.useIngredients(recipe), "useIngredients should return true when ingredients are sufficient"),
+        () -> assertEquals(10, inventory.getCoffee(), "Coffee should decrease by 5"),
+        () -> assertEquals(10, inventory.getMilk(), "Milk should decrease by 5"),
+        () -> assertEquals(10, inventory.getSugar(), "Sugar should decrease by 5"),
+        () -> assertEquals(10, inventory.getChocolate(), "Chocolate should decrease by 5")
+    );
+}
+```
+
+### Purpose
+This test ensures that the `useIngredients` method correctly reduces the inventory amounts when there are sufficient ingredients for the recipe.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testUseIngredientsInsufficient`
+### Test ID: `78`
+### Method
+```java
+@Test
+public void testUseIngredientsInsufficient() {
+    try {
+        inventory.setMilk(2);
+        recipe.setAmtCoffee("5");
+        recipe.setAmtMilk("5");
+    } catch (RecipeException e) {
+        fail("Setting recipe amounts should not throw an exception");
+    }
+    assertFalse(inventory.useIngredients(recipe), "useIngredients should return false when ingredients are insufficient");
+    assertEquals(15, inventory.getCoffee(), "Coffee should remain unchanged when ingredients are insufficient");
+    assertEquals(2, inventory.getMilk(), "Milk should remain unchanged when ingredients are insufficient");
+}
+```
+
+### Purpose
+This test checks that the `useIngredients` method returns `false` and does not modify the inventory when there are insufficient ingredients for the recipe.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testUseIngredientsZeroAmounts`
+### Test ID: `79`
+### Method
+```java
+@Test
+public void testUseIngredientsZeroAmounts() {
+    try {
+        recipe.setAmtCoffee("0");
+        recipe.setAmtMilk("0");
+        recipe.setAmtSugar("0");
+        recipe.setAmtChocolate("0");
+    } catch (RecipeException e) {
+        fail("Setting recipe amounts should not throw an exception");
+    }
+    assertTrue(inventory.useIngredients(recipe), "useIngredients should return true when the recipe requires zero amounts");
+    assertEquals(15, inventory.getCoffee(), "Coffee should remain unchanged when the recipe requires zero amounts");
+    assertEquals(15, inventory.getMilk(), "Milk should remain unchanged when the recipe requires zero amounts");
+    assertEquals(15, inventory.getSugar(), "Sugar should remain unchanged when the recipe requires zero amounts");
+    assertEquals(15, inventory.getChocolate(), "Chocolate should remain unchanged when the recipe requires zero amounts");
+}
+```
+
+### Purpose
+This test verifies that the `useIngredients` method returns `true` and does not modify the inventory when the recipe requires zero amounts of all ingredients.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testToString`
+### Test ID: `80`
+### Method
+```java
+@Test
+public void testToString() {
+    String expected = "Coffee: 15\nMilk: 15\nSugar: 15\nChocolate: 15\n";
+    assertEquals(expected, inventory.toString());
+}
+```
+
+### Purpose
+This test ensures that the `toString` method returns the correct string representation of the inventory.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testEquals`
+### Test ID: `81`
+### Method
+```java
+@Test
+public void testEquals() {
+    Inventory inventory2 = new Inventory();
+    assertEquals(inventory, inventory2, "Inventories should be equal when all values are the same");
+}
+```
+
+### Purpose
+This test checks that the `equals` method returns `true` when comparing two `Inventory` objects with the same values.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testHashCode`
+### Test ID: `82`
+### Method
+```java
+@Test
+public void testHashCode() {
+    Inventory inventory2 = new Inventory();
+    assertEquals(inventory.hashCode(), inventory2.hashCode(), "Hash codes should be equal when inventories are equal");
+}
+```
+
+### Purpose
+This test verifies that the `hashCode` method returns the same value for two `Inventory` objects with the same values.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testNotEquals`
+### Test ID: `83`
+### Method
+```java
+@Test
+public void testNotEquals() {
+    Inventory inventory2 = new Inventory();
+    inventory2.setCoffee(10);
+    assertNotEquals(inventory, inventory2, "Inventories should not be equal when a value is different");
+}
+```
+
+### Purpose
+This test ensures that the `equals` method returns `false` when comparing two `Inventory` objects with different values.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `InventoryTest::testNotEqualsNullObject`
+### Test ID: `84`
+### Method
+```java
+@Test
+public void testNotEqualsNullObject() {
+    assertNotEquals(null, inventory, "Inventory should not be equal to null");
+}
+```
+
+### Purpose
+This test checks that the `equals` method returns `false` when comparing an `Inventory` object to `null`.
+
+### Execution Report: `PASSED`
+
+---
