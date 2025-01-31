@@ -1,6 +1,18 @@
 {
   "as2-coffeemaker": [
     {
+      "fileDescriptor": "$/src/main/java/coffee/Inventory.java",
+      "linenumber": 181,
+      "name": "if (amtSugar \u003c\u003d 0) {",
+      "bookmarkType": "DEFAULT"
+    },
+    {
+      "fileDescriptor": "$/src/main/java/coffee/Inventory.java",
+      "linenumber": 219,
+      "name": "Inventory.coffee +\u003d r.getAmtCoffee();",
+      "bookmarkType": "DEFAULT"
+    },
+    {
       "fileDescriptor": "$/src/main/java/coffee/Recipe.java",
       "linenumber": 41,
       "name": "throw new RecipeException(\"Units of chocolate must be a positive integer\");",
