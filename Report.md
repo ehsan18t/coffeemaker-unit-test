@@ -1123,7 +1123,8 @@ This test verifies that the `addSugar` method throws an `InventoryException` whe
 
 ### Execution Report: `FAILED`
 ```
-org.opentest4j.AssertionFailedError: Adding negative sugar should fail ==> Expected coffee.exceptions.InventoryException to be thrown, but nothing was thrown.
+org.opentest4j.AssertionFailedError: Adding negative sugar should fail ==> 
+Expected coffee.exceptions.InventoryException to be thrown, but nothing was thrown.
 ```
 
 ---
