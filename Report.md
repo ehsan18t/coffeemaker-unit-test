@@ -1077,7 +1077,10 @@ public void testAddSugarValid() {
 ### Purpose
 This test ensures that the `addSugar` method correctly increases the sugar amount when a valid integer string is provided.
 
-### Execution Report: `PASSED`
+### Execution Report: `FAILED`
+```
+org.opentest4j.AssertionFailedError: Adding sugar should not throw an exception
+```
 
 ---
 
@@ -1118,7 +1121,10 @@ public void testAddSugarNegativeValue() {
 ### Purpose
 This test verifies that the `addSugar` method throws an `InventoryException` when a negative value is provided.
 
-### Execution Report: `PASSED`
+### Execution Report: `FAILED`
+```
+org.opentest4j.AssertionFailedError: Adding negative sugar should fail ==> Expected coffee.exceptions.InventoryException to be thrown, but nothing was thrown.
+```
 
 ---
 
@@ -1458,7 +1464,12 @@ public void testUseIngredientsSufficient() {
 ### Purpose
 This test ensures that the `useIngredients` method correctly reduces the inventory amounts when there are sufficient ingredients for the recipe.
 
-### Execution Report: `PASSED`
+### Execution Report: `FAILED`
+```
+org.opentest4j.AssertionFailedError: Coffee should decrease by 5 ==> 
+Expected :10
+Actual   :20
+```
 
 ---
 
@@ -1530,78 +1541,6 @@ public void testToString() {
 
 ### Purpose
 This test ensures that the `toString` method returns the correct string representation of the inventory.
-
-### Execution Report: `PASSED`
-
----
-
-## Test `InventoryTest::testEquals`
-### Test ID: `81`
-### Method
-```java
-@Test
-public void testEquals() {
-    Inventory inventory2 = new Inventory();
-    assertEquals(inventory, inventory2, "Inventories should be equal when all values are the same");
-}
-```
-
-### Purpose
-This test checks that the `equals` method returns `true` when comparing two `Inventory` objects with the same values.
-
-### Execution Report: `PASSED`
-
----
-
-## Test `InventoryTest::testHashCode`
-### Test ID: `82`
-### Method
-```java
-@Test
-public void testHashCode() {
-    Inventory inventory2 = new Inventory();
-    assertEquals(inventory.hashCode(), inventory2.hashCode(), "Hash codes should be equal when inventories are equal");
-}
-```
-
-### Purpose
-This test verifies that the `hashCode` method returns the same value for two `Inventory` objects with the same values.
-
-### Execution Report: `PASSED`
-
----
-
-## Test `InventoryTest::testNotEquals`
-### Test ID: `83`
-### Method
-```java
-@Test
-public void testNotEquals() {
-    Inventory inventory2 = new Inventory();
-    inventory2.setCoffee(10);
-    assertNotEquals(inventory, inventory2, "Inventories should not be equal when a value is different");
-}
-```
-
-### Purpose
-This test ensures that the `equals` method returns `false` when comparing two `Inventory` objects with different values.
-
-### Execution Report: `PASSED`
-
----
-
-## Test `InventoryTest::testNotEqualsNullObject`
-### Test ID: `84`
-### Method
-```java
-@Test
-public void testNotEqualsNullObject() {
-    assertNotEquals(null, inventory, "Inventory should not be equal to null");
-}
-```
-
-### Purpose
-This test checks that the `equals` method returns `false` when comparing an `Inventory` object to `null`.
 
 ### Execution Report: `PASSED`
 

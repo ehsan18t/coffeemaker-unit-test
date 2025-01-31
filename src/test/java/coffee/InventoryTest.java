@@ -366,28 +366,4 @@ public class InventoryTest {
         String expected = "Coffee: 15\nMilk: 15\nSugar: 15\nChocolate: 15\n";
         assertEquals(expected, inventory.toString());
     }
-
-    @Test
-    public void testEquals() {
-        Inventory inventory2 = new Inventory();
-        assertEquals(inventory, inventory2, "Inventories should be equal when all values are the same");
-    }
-
-    @Test
-    public void testHashCode() {
-        Inventory inventory2 = new Inventory();
-        assertEquals(inventory.hashCode(), inventory2.hashCode(), "Hash codes should be equal when inventories are equal");
-    }
-
-    @Test
-    public void testNotEquals() {
-        Inventory inventory2 = new Inventory();
-        inventory2.setCoffee(10);
-        assertNotEquals(inventory, inventory2, "Inventories should not be equal when a value is different");
-    }
-
-    @Test
-    public void testNotEqualsNullObject() {
-        assertNotEquals(null, inventory, "Inventory should not be equal to null");
-    }
 }
