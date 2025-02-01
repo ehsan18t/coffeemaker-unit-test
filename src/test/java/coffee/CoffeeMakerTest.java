@@ -129,13 +129,17 @@ public class CoffeeMakerTest {
 
     // ========== Test Add Inventory ========== //
     @Test
-    public void testAddInventorySuccess() throws InventoryException {
-        coffeeMaker.addInventory("10", "10", "10", "10");
-        String inventory = coffeeMaker.checkInventory();
-        assertTrue(inventory.contains("Coffee: 25"));
-        assertTrue(inventory.contains("Milk: 25"));
-        assertTrue(inventory.contains("Sugar: 25"));
-        assertTrue(inventory.contains("Chocolate: 25"));
+    public void testAddInventorySuccess() {
+        try {
+            coffeeMaker.addInventory("10", "10", "10", "10");
+            String inventory = coffeeMaker.checkInventory();
+            assertTrue(inventory.contains("Coffee: 25"));
+            assertTrue(inventory.contains("Milk: 25"));
+            assertTrue(inventory.contains("Sugar: 25"));
+            assertTrue(inventory.contains("Chocolate: 25"));
+        } catch (InventoryException e) {
+            fail("Adding ingredient should not throw an exception");
+        }
     }
 
     @Test
