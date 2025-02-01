@@ -1546,3 +1546,311 @@ This test ensures that the `toString` method returns the correct string represen
 ### Execution Report: `PASSED`
 
 ---
+
+## Test `RecipeBookTest::testDefaultValues`
+### Test ID: `81`
+### Method
+```java
+@Test
+public void testDefaultValues() {
+    Recipe[] recipes = recipeBook.getRecipes();
+    assertNotNull(recipes, "Recipe array should not be null");
+    assertEquals(4, recipes.length, "Initial Recipe array should have length 4");
+    for (Recipe recipe : recipes) {
+        assertNull(recipe, "Initial Recipe array should be empty");
+    }
+}
+```
+
+### Purpose
+This test verifies that a newly created `RecipeBook` object initializes its recipe array with a length of 4 and all elements are set to `null`.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `RecipeBookTest::testAddRecipeSuccess`
+### Test ID: `82`
+### Method
+```java
+@Test
+public void testAddRecipeSuccess() {
+    assertTrue(recipeBook.addRecipe(recipe1));
+    assertTrue(recipeBook.addRecipe(recipe2));
+    assertTrue(recipeBook.addRecipe(recipe3));
+    assertTrue(recipeBook.addRecipe(recipe4));
+}
+```
+
+### Purpose
+This test ensures that the `addRecipe` method successfully adds up to 4 unique recipes to the recipe book.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `RecipeBookTest::testAddRecipeDuplicate`
+### Test ID: `83`
+### Method
+```java
+@Test
+public void testAddRecipeDuplicate() {
+    recipeBook.addRecipe(recipe1);
+    assertFalse(recipeBook.addRecipe(recipe1), "Duplicate recipe should not be added");
+}
+```
+
+### Purpose
+This test checks that the `addRecipe` method returns `false` when attempting to add a duplicate recipe.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `RecipeBookTest::testAddRecipeDuplicateWithDifferentObject`
+### Test ID: `84`
+### Method
+```java
+@Test
+public void testAddRecipeDuplicateWithDifferentObject() {
+    Recipe duplicateRecipe = new Recipe();
+    duplicateRecipe.setName("Recipe1");
+    recipeBook.addRecipe(recipe1);
+    assertFalse(recipeBook.addRecipe(duplicateRecipe), "Recipes with identical contents should be treated as duplicates");
+}
+```
+
+### Purpose
+This test verifies that the `addRecipe` method treats recipes with identical names as duplicates, even if they are different objects.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `RecipeBookTest::testAddRecipeFull`
+### Test ID: `85`
+### Method
+```java
+@Test
+public void testAddRecipeFull() {
+    recipeBook.addRecipe(recipe1);
+    recipeBook.addRecipe(recipe2);
+    recipeBook.addRecipe(recipe3);
+    recipeBook.addRecipe(recipe4);
+    assertFalse(recipeBook.addRecipe(recipe5), "Recipe book is full, so recipe5 should not be added");
+}
+```
+
+### Purpose
+This test ensures that the `addRecipe` method returns `false` when attempting to add a recipe to a full recipe book.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `RecipeBookTest::testAddRecipeNull`
+### Test ID: `86`
+### Method
+```java
+@Test
+public void testAddRecipeNull() {
+    try {
+        assertFalse(recipeBook.addRecipe(null), "Adding a null recipe should return false");
+    } catch (NullPointerException e) {
+        fail("throwing NullPointerException instead of returning false");
+    }
+}
+```
+
+### Purpose
+This test checks that the `addRecipe` method returns `false` when attempting to add a `null` recipe, without throwing an exception.
+
+### Execution Report: `FAILED`
+```
+org.opentest4j.AssertionFailedError: throwing NullPointerException instead of returning false
+```
+
+---
+
+## Test `RecipeBookTest::testAddRecipeDoesNotOverwrite`
+### Test ID: `87`
+### Method
+```java
+@Test
+public void testAddRecipeDoesNotOverwrite() {
+    recipeBook.addRecipe(recipe1);
+    recipeBook.addRecipe(recipe2);
+    Recipe[] recipes = recipeBook.getRecipes();
+    assertEquals(recipe1, recipes[0], "Recipe1 should remain at index 0");
+    assertEquals(recipe2, recipes[1], "Recipe2 should remain at index 1");
+    assertNull(recipes[2], "Index 2 should be null");
+}
+```
+
+### Purpose
+This test verifies that adding recipes does not overwrite existing recipes in the recipe book.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `RecipeBookTest::testDeleteRecipeSuccess`
+### Test ID: `88`
+### Method
+```java
+@Test
+public void testDeleteRecipeSuccess() {
+    recipeBook.addRecipe(recipe1);
+    assertEquals(recipe1.getName(), recipeBook.deleteRecipe(0));
+    assertNull(recipeBook.getRecipes()[0], "Recipe1 should be deleted");
+}
+```
+
+### Purpose
+This test ensures that the `deleteRecipe` method successfully deletes a recipe at a valid index and returns the name of the deleted recipe.
+
+### Execution Report: `FAILED`
+```
+org.opentest4j.AssertionFailedError: Recipe1 should be deleted ==> 
+Expected :null
+Actual   :Recipe1
+```
+
+---
+
+## Test `RecipeBookTest::testDeleteRecipeInvalidIndexNegative`
+### Test ID: `89`
+### Method
+```java
+@Test
+public void testDeleteRecipeInvalidIndexNegative() {
+    assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+        recipeBook.deleteRecipe(-1);
+    }, "Negative index should throw ArrayIndexOutOfBoundsException");
+}
+```
+
+### Purpose
+This test checks that the `deleteRecipe` method throws an `ArrayIndexOutOfBoundsException` when a negative index is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `RecipeBookTest::testDeleteRecipeInvalidIndexOutOfBounds`
+### Test ID: `90`
+### Method
+```java
+@Test
+public void testDeleteRecipeInvalidIndexOutOfBounds() {
+    assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+        recipeBook.deleteRecipe(4);
+    }, "Out of bounds index should throw ArrayIndexOutOfBoundsException");
+}
+```
+
+### Purpose
+This test verifies that the `deleteRecipe` method throws an `ArrayIndexOutOfBoundsException` when an out-of-bounds index is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `RecipeBookTest::testDeleteRecipeDoesNotExist`
+### Test ID: `91`
+### Method
+```java
+@Test
+public void testDeleteRecipeDoesNotExist() {
+    assertNull(recipeBook.deleteRecipe(0), "No recipe at index 0, so should return null");
+}
+```
+
+### Purpose
+This test ensures that the `deleteRecipe` method returns `null` when attempting to delete a recipe from an empty index.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `RecipeBookTest::testEditRecipeSuccess`
+### Test ID: `92`
+### Method
+```java
+@Test
+public void testEditRecipeSuccess() {
+    recipeBook.addRecipe(recipe1);
+    Recipe newRecipe = new Recipe();
+    newRecipe.setName("NewRecipe");
+    assertEquals("Recipe1", recipeBook.editRecipe(0, newRecipe), "Recipe1 should be edited");
+    assertEquals(newRecipe, recipeBook.getRecipes()[0], "Recipe1 should be replaced by newRecipe");
+}
+```
+
+### Purpose
+This test verifies that the `editRecipe` method successfully replaces a recipe at a valid index and returns the name of the original recipe.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `RecipeBookTest::testEditRecipeInvalidIndexNegative`
+### Test ID: `93`
+### Method
+```java
+@Test
+public void testEditRecipeInvalidIndexNegative() {
+    Recipe newRecipe = new Recipe();
+    newRecipe.setName("NewRecipe");
+    assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+        recipeBook.editRecipe(-1, newRecipe);
+    }, "Negative index should throw ArrayIndexOutOfBoundsException");
+}
+```
+
+### Purpose
+This test checks that the `editRecipe` method throws an `ArrayIndexOutOfBoundsException` when a negative index is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `RecipeBookTest::testEditRecipeInvalidIndexOutOfBounds`
+### Test ID: `94`
+### Method
+```java
+@Test
+public void testEditRecipeInvalidIndexOutOfBounds() {
+    Recipe newRecipe = new Recipe();
+    newRecipe.setName("NewRecipe");
+    assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+        recipeBook.editRecipe(4, newRecipe);
+    }, "Out of bounds index should throw ArrayIndexOutOfBoundsException");
+}
+```
+
+### Purpose
+This test verifies that the `editRecipe` method throws an `ArrayIndexOutOfBoundsException` when an out-of-bounds index is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `RecipeBookTest::testEditRecipeDoesNotExist`
+### Test ID: `95`
+### Method
+```java
+@Test
+public void testEditRecipeDoesNotExist() {
+    Recipe newRecipe = new Recipe();
+    newRecipe.setName("NewRecipe");
+    assertNull(recipeBook.editRecipe(0, newRecipe), "No recipe at index 0, should return null");
+}
+```
+
+### Purpose
+This test ensures that the `editRecipe` method returns `null` when attempting to edit a recipe at an empty index.
+
+### Execution Report: `PASSED`
+
+---
