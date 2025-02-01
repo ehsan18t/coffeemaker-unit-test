@@ -1854,3 +1854,388 @@ This test ensures that the `editRecipe` method returns `null` when attempting to
 ### Execution Report: `PASSED`
 
 ---
+
+## Test `CoffeeMakerTest::testDefaultValues`
+### Test ID: `96`
+### Method
+```java
+@Test
+public void testDefaultValues() {
+    // RecipeBook
+    assertNotNull(coffeeMaker.getRecipes());
+    assertEquals(4, coffeeMaker.getRecipes().length);
+
+    // Inventory
+    String inventory = coffeeMaker.checkInventory();
+    assertTrue(inventory.contains("Coffee: 15"));
+    assertTrue(inventory.contains("Milk: 15"));
+    assertTrue(inventory.contains("Sugar: 15"));
+    assertTrue(inventory.contains("Chocolate: 15"));
+}
+```
+
+### Purpose
+This test verifies that a newly created `CoffeeMaker` object initializes its `RecipeBook` with 4 empty recipe slots and its `Inventory` with default values (15 units of coffee, milk, sugar, and chocolate).
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `CoffeeMakerTest::testAddRecipeSuccess`
+### Test ID: `97`
+### Method
+```java
+@Test
+public void testAddRecipeSuccess() {
+    assertTrue(coffeeMaker.addRecipe(recipe1), "Recipe1 should be added");
+}
+```
+
+### Purpose
+This test ensures that the `addRecipe` method successfully adds a valid recipe to the `CoffeeMaker`.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `CoffeeMakerTest::testAddRecipeDuplicate`
+### Test ID: `98`
+### Method
+```java
+@Test
+public void testAddRecipeDuplicate() {
+    coffeeMaker.addRecipe(recipe1);
+    assertFalse(coffeeMaker.addRecipe(recipe1), "Recipe1 should not be added again");
+}
+```
+
+### Purpose
+This test checks that the `addRecipe` method returns `false` when attempting to add a duplicate recipe.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `CoffeeMakerTest::testDeleteRecipeSuccess`
+### Test ID: `99`
+### Method
+```java
+@Test
+public void testDeleteRecipeSuccess() {
+    coffeeMaker.addRecipe(recipe1);
+    assertEquals("Recipe1", coffeeMaker.deleteRecipe(0), "Recipe1 should be deleted");
+
+    Recipe[] recipes = coffeeMaker.getRecipes();
+    assertNull(recipes[0], "Recipe1 deleted, so index 0 should be null");
+}
+```
+
+### Purpose
+This test verifies that the `deleteRecipe` method successfully deletes a recipe at a valid index and returns the name of the deleted recipe.
+
+### Execution Report: `FAILED`
+```
+org.opentest4j.AssertionFailedError: Recipe1 deleted, so index 0 should be null ==> 
+Expected :null
+Actual   :
+```
+
+---
+
+## Test `CoffeeMakerTest::testDeleteRecipeInvalidIndexNegative`
+### Test ID: `100`
+### Method
+```java
+@Test
+public void testDeleteRecipeInvalidIndexNegative() {
+    assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+        coffeeMaker.deleteRecipe(-1);
+    }, "Negative index should throw ArrayIndexOutOfBoundsException");
+}
+```
+
+### Purpose
+This test ensures that the `deleteRecipe` method throws an `ArrayIndexOutOfBoundsException` when a negative index is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `CoffeeMakerTest::testDeleteRecipeInvalidIndexOutOfBounds`
+### Test ID: `101`
+### Method
+```java
+@Test
+public void testDeleteRecipeInvalidIndexOutOfBounds() {
+    assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+        coffeeMaker.deleteRecipe(4);
+    }, "Out of bounds index should throw ArrayIndexOutOfBoundsException");
+}
+```
+
+### Purpose
+This test checks that the `deleteRecipe` method throws an `ArrayIndexOutOfBoundsException` when an out-of-bounds index is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `CoffeeMakerTest::testDeleteRecipeDoesNotExist`
+### Test ID: `102`
+### Method
+```java
+@Test
+public void testDeleteRecipeDoesNotExist() {
+    assertNull(coffeeMaker.deleteRecipe(0), "No recipe at index 0, so should return null");
+}
+```
+
+### Purpose
+This test verifies that the `deleteRecipe` method returns `null` when attempting to delete a recipe from an empty index.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `CoffeeMakerTest::testEditRecipeSuccess`
+### Test ID: `103`
+### Method
+```java
+@Test
+public void testEditRecipeSuccess() {
+    coffeeMaker.addRecipe(recipe1);
+    Recipe newRecipe = new Recipe();
+    newRecipe.setName("NewRecipe");
+    assertEquals("Recipe1", coffeeMaker.editRecipe(0, newRecipe));
+}
+```
+
+### Purpose
+This test ensures that the `editRecipe` method successfully replaces a recipe at a valid index and returns the name of the original recipe.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `CoffeeMakerTest::testEditRecipeInvalidIndexNegative`
+### Test ID: `104`
+### Method
+```java
+@Test
+public void testEditRecipeInvalidIndexNegative() {
+    Recipe newRecipe = new Recipe();
+    newRecipe.setName("NewRecipe");
+    assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+        coffeeMaker.editRecipe(-1, newRecipe);
+    }, "Negative index should throw ArrayIndexOutOfBoundsException");
+}
+```
+
+### Purpose
+This test checks that the `editRecipe` method throws an `ArrayIndexOutOfBoundsException` when a negative index is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `CoffeeMakerTest::testEditRecipeInvalidIndexOutOfBounds`
+### Test ID: `105`
+### Method
+```java
+@Test
+public void testEditRecipeInvalidIndexOutOfBounds() {
+    Recipe newRecipe = new Recipe();
+    newRecipe.setName("NewRecipe");
+    assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+        coffeeMaker.editRecipe(4, newRecipe);
+    }, "Out of bounds index should throw ArrayIndexOutOfBoundsException");
+}
+```
+
+### Purpose
+This test verifies that the `editRecipe` method throws an `ArrayIndexOutOfBoundsException` when an out-of-bounds index is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `CoffeeMakerTest::testEditRecipeDoesNotExist`
+### Test ID: `106`
+### Method
+```java
+@Test
+public void testEditRecipeDoesNotExist() {
+    Recipe newRecipe = new Recipe();
+    newRecipe.setName("NewRecipe");
+    assertNull(coffeeMaker.editRecipe(0, newRecipe), "No recipe at index 0, so should return null");
+}
+```
+
+### Purpose
+This test ensures that the `editRecipe` method returns `null` when attempting to edit a recipe at an empty index.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `CoffeeMakerTest::testAddInventorySuccess`
+### Test ID: `107`
+### Method
+```java
+@Test
+public void testAddInventorySuccess() throws InventoryException {
+    coffeeMaker.addInventory("10", "10", "10", "10");
+    String inventory = coffeeMaker.checkInventory();
+    assertTrue(inventory.contains("Coffee: 25"));
+    assertTrue(inventory.contains("Milk: 25"));
+    assertTrue(inventory.contains("Sugar: 25"));
+    assertTrue(inventory.contains("Chocolate: 25"));
+}
+```
+
+### Purpose
+This test verifies that the `addInventory` method correctly increases the inventory amounts when valid inputs are provided.
+
+### Execution Report: `FAILED`
+```
+coffee.exceptions.InventoryException: Units of sugar must be a positive integer
+```
+
+---
+
+## Test `CoffeeMakerTest::testAddInventoryInvalidNonNumeric`
+### Test ID: `108`
+### Method
+```java
+@Test
+public void testAddInventoryInvalidNonNumeric() {
+    assertThrows(InventoryException.class, () -> {
+        coffeeMaker.addInventory("abc", "10", "10", "10");
+    }, "Non-numeric input should throw InventoryException");
+}
+```
+
+### Purpose
+This test checks that the `addInventory` method throws an `InventoryException` when non-numeric inputs are provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `CoffeeMakerTest::testAddInventoryInvalidNegative`
+### Test ID: `109`
+### Method
+```java
+@Test
+public void testAddInventoryInvalidNegative() {
+    assertThrows(InventoryException.class, () -> {
+        coffeeMaker.addInventory("-5", "10", "10", "10");
+    }, "Negative input should throw InventoryException");
+}
+```
+
+### Purpose
+This test ensures that the `addInventory` method throws an `InventoryException` when negative inputs are provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `CoffeeMakerTest::testAddInventoryInvalidNull`
+### Test ID: `110`
+### Method
+```java
+@Test
+public void testAddInventoryInvalidNull() {
+    assertThrows(InventoryException.class, () -> {
+        coffeeMaker.addInventory(null, "10", "10", "10");
+    }, "NULL input should throw InventoryException");
+}
+```
+
+### Purpose
+This test verifies that the `addInventory` method throws an `InventoryException` when `null` inputs are provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `CoffeeMakerTest::testMakeCoffeeSuccess`
+### Test ID: `111`
+### Method
+```java
+@Test
+public void testMakeCoffeeSuccess() {
+    coffeeMaker.addRecipe(recipe1);
+    int change = coffeeMaker.makeCoffee(0, 100);
+    assertEquals(50, change, "Price is 50, paid 100. Change should be 50");
+}
+```
+
+### Purpose
+This test ensures that the `makeCoffee` method correctly calculates and returns the change when a valid recipe is selected and sufficient payment is provided.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `CoffeeMakerTest::testMakeCoffeeRecipeDoesNotExist`
+### Test ID: `112`
+### Method
+```java
+@Test
+public void testMakeCoffeeRecipeDoesNotExist() {
+    int change = coffeeMaker.makeCoffee(0, 100);
+    assertEquals(100, change, "Recipe does not exist, return full payment");
+}
+```
+
+### Purpose
+This test checks that the `makeCoffee` method returns the full payment when the selected recipe does not exist.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `CoffeeMakerTest::testMakeCoffeeInsufficientPayment`
+### Test ID: `113`
+### Method
+```java
+@Test
+public void testMakeCoffeeInsufficientPayment() {
+    coffeeMaker.addRecipe(recipe1);
+    int change = coffeeMaker.makeCoffee(0, 40);
+    assertEquals(40, change, "Price is 50, paid 40 (insufficient), return 40");
+}
+```
+
+### Purpose
+This test verifies that the `makeCoffee` method returns the full payment when the payment is insufficient for the selected recipe.
+
+### Execution Report: `PASSED`
+
+---
+
+## Test `CoffeeMakerTest::testMakeCoffeeInsufficientIngredients`
+### Test ID: `114`
+### Method
+```java
+@Test
+public void testMakeCoffeeInsufficientIngredients() {
+    coffeeMaker.addRecipe(recipe2); // Requires 10 units of each ingredient
+    int change = coffeeMaker.makeCoffee(0, 100);
+    assertEquals(100, change, "Insufficient ingredients, return full payment");
+}
+```
+
+### Purpose
+This test ensures that the `makeCoffee` method returns the full payment when there are insufficient ingredients to make the selected recipe.
+
+### Execution Report: `FAILED`
+```
+org.opentest4j.AssertionFailedError: Insufficient ingredients, return full payment ==> 
+Expected :100
+Actual   :0
+```
+
+---
