@@ -1,35 +1,35 @@
-## Bug: `Sugar can't be added with positive input`
-### Bug ID: `1`
-### TestCase ID: `10`
-### Location: `Inventory::addSugar`
-**Class:** `Inventory`
-**Method:** `addSugar`
-**Line:** `182`
-### Recommended Fix
+## **Bug Report**
+
+### **1. Sugar Can't Be Added with Positive Input**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 1          | 10              | `Inventory::addSugar` | 182      |
+
+**Recommended Fix:**
 ```java
 public synchronized void addSugar(String sugar) throws InventoryException {
-	int amtSugar = 0;
-	try {
-		amtSugar = Integer.parseInt(sugar);
-	} catch (NumberFormatException e) {
-		throw new InventoryException("Units of sugar must be a positive integer");
-	}
-	if (amtSugar >= 0) {
-		Inventory.sugar += amtSugar;
-	} else {
-		throw new InventoryException("Units of sugar must be a positive integer");
-	}
+    int amtSugar = 0;
+    try {
+        amtSugar = Integer.parseInt(sugar);
+    } catch (NumberFormatException e) {
+        throw new InventoryException("Units of sugar must be a positive integer");
+    }
+    if (amtSugar >= 0) {
+        Inventory.sugar += amtSugar;
+    } else {
+        throw new InventoryException("Units of sugar must be a positive integer");
+    }
 }
 ```
 
-## Bug: `Recipe deletion does not nullify index properly`
-### Bug ID: `2`
-### TestCase ID: `99`
-### Location: `CoffeeMaker::deleteRecipe`
-**Class:** `CoffeeMaker`
-**Method:** `deleteRecipe`
-**Line:** `215`
-### Recommended Fix
+---
+
+### **2. Recipe Deletion Does Not Nullify Index Properly**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 2          | 99              | `CoffeeMaker::deleteRecipe` | 215      |
+
+**Recommended Fix:**
 ```java
 public String deleteRecipe(int index) {
     if (index < 0 || index >= recipes.length) {
@@ -46,14 +46,12 @@ public String deleteRecipe(int index) {
 
 ---
 
-## Bug: `Sugar addition with zero units fails`
-### Bug ID: `3`
-### TestCase ID: `107`
-### Location: `Inventory::addInventory`
-**Class:** `Inventory`
-**Method:** `addInventory`
-**Line:** `123`
-### Recommended Fix
+### **3. Sugar Addition with Zero Units Fails**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 3          | 107             | `Inventory::addInventory` | 123      |
+
+**Recommended Fix:**
 ```java
 public synchronized void addInventory(String coffee, String milk, String sugar, String chocolate) throws InventoryException {
     int amtCoffee = parsePositiveInt(coffee);
@@ -82,14 +80,12 @@ private int parsePositiveInt(String value) throws InventoryException {
 
 ---
 
-## Bug: `Negative index should not be allowed for recipe editing or deletion`
-### Bug ID: `4`
-### TestCase ID: `104`
-### Location: `CoffeeMaker::editRecipe`
-**Class:** `CoffeeMaker`
-**Method:** `editRecipe`
-**Line:** `210`
-### Recommended Fix
+### **4. Negative Index Should Not Be Allowed for Recipe Editing or Deletion**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 4          | 104             | `CoffeeMaker::editRecipe` | 210      |
+
+**Recommended Fix:**
 ```java
 public String editRecipe(int index, Recipe newRecipe) {
     if (index < 0 || index >= recipes.length) {
@@ -103,14 +99,12 @@ public String editRecipe(int index, Recipe newRecipe) {
 
 ---
 
-## Bug: `Duplicate recipes are allowed`
-### Bug ID: `5`
-### TestCase ID: `98`
-### Location: `CoffeeMaker::addRecipe`
-**Class:** `CoffeeMaker`
-**Method:** `addRecipe`
-**Line:** `138`
-### Recommended Fix
+### **5. Duplicate Recipes Are Allowed**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 5          | 98              | `CoffeeMaker::addRecipe` | 138      |
+
+**Recommended Fix:**
 ```java
 public boolean addRecipe(Recipe recipe) {
     for (int i = 0; i < recipes.length; i++) {
@@ -130,14 +124,12 @@ public boolean addRecipe(Recipe recipe) {
 
 ---
 
-## Bug: `InventoryException thrown for positive non-numeric inputs`
-### Bug ID: `6`
-### TestCase ID: `108`
-### Location: `Inventory::addInventory`
-**Class:** `Inventory`
-**Method:** `addInventory`
-**Line:** `120`
-### Recommended Fix
+### **6. InventoryException Thrown for Positive Non-Numeric Inputs**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 6          | 108             | `Inventory::addInventory` | 120      |
+
+**Recommended Fix:**
 ```java
 public synchronized void addInventory(String coffee, String milk, String sugar, String chocolate) throws InventoryException {
     int amtCoffee = parsePositiveInt(coffee);
@@ -166,14 +158,12 @@ private int parsePositiveInt(String value) throws InventoryException {
 
 ---
 
-## Bug: `Insufficient ingredients not properly handled`
-### Bug ID: `7`
-### TestCase ID: `114`
-### Location: `CoffeeMaker::makeCoffee`
-**Class:** `CoffeeMaker`
-**Method:** `makeCoffee`
-**Line:** `180`
-### Recommended Fix
+### **7. Insufficient Ingredients Not Properly Handled**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 7          | 114             | `CoffeeMaker::makeCoffee` | 180      |
+
+**Recommended Fix:**
 ```java
 public int makeCoffee(int recipeIndex, int payment) {
     Recipe selectedRecipe = recipes[recipeIndex];
@@ -216,13 +206,12 @@ private void deductIngredients(Recipe recipe) {
 
 ---
 
-## Bug: `NullPointerException when attempting to add a recipe with null ingredients`
-### Bug ID: `8`
-### Location: `CoffeeMaker::addRecipe`
-**Class:** `CoffeeMaker`
-**Method:** `addRecipe`
-**Line:** `137`
-### Recommended Fix
+### **8. NullPointerException When Attempting to Add a Recipe with Null Ingredients**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 8          | N/A             | `CoffeeMaker::addRecipe` | 137      |
+
+**Recommended Fix:**
 ```java
 public boolean addRecipe(Recipe recipe) {
     if (recipe == null || recipe.getIngredients() == null || recipe.getIngredients().isEmpty()) {
@@ -241,13 +230,12 @@ public boolean addRecipe(Recipe recipe) {
 
 ---
 
-## Bug: `InventoryException thrown without specific ingredient errors`
-### Bug ID: `9`
-### Location: `Inventory::addInventory`
-**Class:** `Inventory`
-**Method:** `addInventory`
-**Line:** `118`
-### Recommended Fix
+### **9. InventoryException Thrown Without Specific Ingredient Errors**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 9          | N/A             | `Inventory::addInventory` | 118      |
+
+**Recommended Fix:**
 ```java
 public synchronized void addInventory(String coffee, String milk, String sugar, String chocolate) throws InventoryException {
     try {
@@ -286,13 +274,12 @@ public synchronized void addInventory(String coffee, String milk, String sugar, 
 
 ---
 
-## Bug: `Multiple simultaneous additions of the same recipe`
-### Bug ID: `10`
-### Location: `CoffeeMaker::addRecipe`
-**Class:** `CoffeeMaker`
-**Method:** `addRecipe`
-**Line:** `136`
-### Recommended Fix
+### **10. Multiple Simultaneous Additions of the Same Recipe**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 10         | N/A             | `CoffeeMaker::addRecipe` | 136      |
+
+**Recommended Fix:**
 ```java
 public boolean addRecipe(Recipe recipe) {
     if (recipe == null || recipe.getName() == null || recipe.getName().trim().isEmpty()) {
@@ -317,68 +304,66 @@ public boolean addRecipe(Recipe recipe) {
 
 ---
 
-## Bug: `Index out of bounds during recipe selection`
-### Bug ID: `11`
-### Location: `CoffeeMaker::selectRecipe`
-**Class:** `CoffeeMaker`
-**Method:** `selectRecipe`
-**Line:** `155`
-### Recommended Fix
+### **11. Incorrect Handling of Recipe Addition when Inventory is Full**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 11         | N/A             | `CoffeeMaker::addRecipe` | 140      |
+
+**Recommended Fix:**
 ```java
-public Recipe selectRecipe(int index) {
-    if (index < 0 || index >= recipes.length || recipes[index] == null) {
-        throw new ArrayIndexOutOfBoundsException("Invalid recipe index or recipe does not exist");
+public boolean addRecipe(Recipe recipe) {
+    for (int i = 0; i < recipes.length; i++) {
+        if (recipes[i] == null) {
+            recipes[i] = recipe;
+            return true; // Add recipe to the first empty spot
+        }
     }
-    return recipes[index];
+    return false; // Inventory is full
 }
 ```
 
 ---
 
-## Bug: `Price mismatch or insufficient funds handling missing in CoffeeMaker`
-### Bug ID: `12`
-### Location: `CoffeeMaker::makeCoffee`
-**Class:** `CoffeeMaker`
-**Method:** `makeCoffee`
-**Line:** `179`
-### Recommended Fix
+### **12. Inventory Overflow with Negative Ingredients**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 12         | 120             | `Inventory::addInventory` | 121      |
+
+**Recommended Fix:**
 ```java
-public int makeCoffee(int recipeIndex, int payment) {
-    Recipe selectedRecipe = recipes[recipeIndex];
-    if (selectedRecipe == null) {
-        return payment; // Return full payment if recipe does not exist
+public synchronized void addInventory(String coffee, String milk, String sugar, String chocolate) throws InventoryException {
+    int amtCoffee = parsePositiveInt(coffee);
+    int amtMilk = parsePositiveInt(milk);
+    int amtSugar = parsePositiveInt(sugar);
+    int amtChocolate = parsePositiveInt(chocolate);
+
+    if (amtCoffee < 0 || amtMilk < 0 || amtSugar < 0 || amtChocolate < 0) {
+        throw new InventoryException("Ingredient amounts must be positive");
     }
     
-    int price = selectedRecipe.getPrice();
-    if (payment < price) {
-        return payment; // Return full payment if insufficient funds
-    }
-    
-    if (!hasSufficientIngredients(selectedRecipe)) {
-        return payment; // Return payment if insufficient ingredients
-    }
-    
-    // Proceed to make coffee if everything is valid
-    deductIngredients(selectedRecipe);
-    return payment - price; // Return the change
+    Inventory.coffee += amtCoffee;
+    Inventory.milk += amtMilk;
+    Inventory.sugar += amtSugar;
+    Inventory.chocolate += amtChocolate;
 }
 ```
 
 ---
 
-## Bug: `Negative recipe quantities causing invalid results`
-### Bug ID: `13`
-### Location: `Recipe::getPrice`
-**Class:** `Recipe`
-**Method:** `getPrice`
-**Line:** `102`
-### Recommended Fix
+### **13. Recipe Editing Does Not Update Index Properly**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 13         | 105             | `CoffeeMaker::editRecipe` | 215      |
+
+**Recommended Fix:**
 ```java
-public int getPrice() {
-    if (coffeeAmount < 0 || milkAmount < 0 || sugarAmount < 0 || chocolateAmount < 0) {
-        throw new IllegalArgumentException("Ingredient quantities cannot be negative");
+public String editRecipe(int index, Recipe newRecipe) {
+    if (index < 0 || index >= recipes.length) {
+        throw new ArrayIndexOutOfBoundsException("Index is out of bounds");
     }
-    return coffeeAmount + milkAmount + sugarAmount + chocolateAmount;
+    String oldRecipeName = recipes[index].getName();
+    recipes[index] = newRecipe;
+    return oldRecipeName;
 }
 ```
 
