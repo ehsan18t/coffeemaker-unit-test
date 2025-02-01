@@ -2,28 +2,25 @@
 
 ---
 
-### **1. Inflexible Recipe Array Size**
+### **1. Incorrect Inventory Initialization**
 | **Bug ID** | **TestCase ID** | **Location**          | **Line** |
 |------------|-----------------|-----------------------|----------|
-| 1          | N/A             | `RecipeBook::RecipeBook` | 13       |
+| 1          | N/A             | `Inventory::Inventory` | 18       |
 
 **Description:**
-The `RecipeBook` constructor initializes the recipe array with a size of 4, but the `NUM_RECIPES` constant is set to 4. This means that the array size is hardcoded and not flexible.
+The `Inventory` constructor initializes the inventory with 15 units of each ingredient, but the fields are declared as `static`. This means that the inventory is shared across all instances of the `Inventory` class, which is not the intended behavior.
 
 **Impact:**
-If the number of recipes needs to be changed, the code must be modified, which is not ideal for maintainability.
+If multiple instances of the `Inventory` class are created, they will all share the same inventory, leading to incorrect inventory management.
 
 **Recommended Fix:**
-Create an overloaded constructor that takes the number of recipes as a parameter to allow for a flexible array size.
+Remove the `static` modifier from the inventory fields to ensure that each instance of the `Inventory` class has its own inventory.
 
 ```java
-public RecipeBook() {
-    recipeArray = new Recipe[NUM_RECIPES];
-}
-
-public RecipeBook(int numRecipes) {
-    recipeArray = new Recipe[numRecipes];
-}
+private int coffee;
+private int milk;
+private int sugar;
+private int chocolate;
 ```
 
 ---
@@ -146,25 +143,84 @@ public synchronized String editRecipe(int recipeToEdit, Recipe newRecipe) {
 
 ---
 
-### **6. Incorrect Inventory Initialization**
+### **6. Inflexible Recipe Array Size**
 | **Bug ID** | **TestCase ID** | **Location**          | **Line** |
 |------------|-----------------|-----------------------|----------|
-| 6         | N/A             | `Inventory::Inventory` | 18       |
+| 6          | N/A             | `RecipeBook::RecipeBook` | 13       |
 
 **Description:**
-The `Inventory` constructor initializes the inventory with 15 units of each ingredient, but the fields are declared as `static`. This means that the inventory is shared across all instances of the `Inventory` class, which is not the intended behavior.
+The `RecipeBook` constructor initializes the recipe array with a size of 4, but the `NUM_RECIPES` constant is set to 4. This means that the array size is hardcoded and not flexible.
 
 **Impact:**
-If multiple instances of the `Inventory` class are created, they will all share the same inventory, leading to incorrect inventory management.
+If the number of recipes needs to be changed, the code must be modified, which is not ideal for maintainability.
 
 **Recommended Fix:**
-Remove the `static` modifier from the inventory fields to ensure that each instance of the `Inventory` class has its own inventory.
+Create an overloaded constructor that takes the number of recipes as a parameter to allow for a flexible array size.
 
 ```java
-private int coffee;
-private int milk;
-private int sugar;
-private int chocolate;
+public RecipeBook() {
+    recipeArray = new Recipe[NUM_RECIPES];
+}
+
+public RecipeBook(int numRecipes) {
+    recipeArray = new Recipe[numRecipes];
+}
+```
+
+---
+
+#### **7. Inconsistent Synchronization in `CoffeeMaker` Class**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line**   |
+|------------|-----------------|-----------------------|------------|
+| 7          | N/A             | `CoffeeMaker::makeCoffee` | 30, 41, 52 |
+
+**Description:**
+The `makeCoffee` method in the `CoffeeMaker` class is synchronized, but other methods that modify shared resources (e.g., `addRecipe`, `deleteRecipe`) are not. This can lead to race conditions in a multi-threaded environment.
+
+**Impact:**
+Inconsistent synchronization can cause race conditions, leading to incorrect behavior when multiple threads access shared resources simultaneously.
+
+**Recommended Fix:**
+Ensure that all methods that modify shared resources are properly synchronized.
+
+```java
+public synchronized boolean addRecipe(Recipe r) {
+    // Existing logic
+}
+
+public synchronized String deleteRecipe(int recipeToDelete) {
+    // Existing logic
+}
+
+public synchronized String editRecipe(int recipeToEdit, Recipe r) {
+    // Existing logic
+}
+```
+
+---
+
+#### **8. Missing empty string Checks in `Recipe` Class**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 8          | N/A             | `Recipe::setName`     | 127      |
+
+**Description:**
+The `setName` method in the `Recipe` class does checks if it's null but does not check if the input `name` is empty string. This can lead to recipes with empty names, which may cause issues when displaying or referencing recipes.
+
+**Impact:**
+Recipes with empty names can cause confusion and issues when trying to reference or display them.
+
+**Recommended Fix:**
+Add empty checks in the `setName` method.
+
+```java
+public void setName(String name) {
+    if (name != null && !name.trim().isEmpty()) {
+        this.name = name;
+    } else {
+        throw new IllegalArgumentException("Recipe name cannot be null or empty");
+    }
+}
 ```
 
 ---
