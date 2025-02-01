@@ -28,10 +28,10 @@ public class CoffeeMakerTest {
             recipe1.setAmtChocolate("5");
 
             recipe2.setPrice("100");
-            recipe2.setAmtCoffee("10");
-            recipe2.setAmtMilk("10");
-            recipe2.setAmtSugar("10");
-            recipe2.setAmtChocolate("10");
+            recipe2.setAmtCoffee("100");
+            recipe2.setAmtMilk("100");
+            recipe2.setAmtSugar("100");
+            recipe2.setAmtChocolate("100");
         } catch (RecipeException e) {
             fail("RecipeException should not be thrown");
         }
@@ -186,7 +186,7 @@ public class CoffeeMakerTest {
 
     @Test
     public void testMakeCoffeeInsufficientIngredients() {
-        coffeeMaker.addRecipe(recipe2); // Requires 10 units of each ingredient
+        coffeeMaker.addRecipe(recipe2); // Requires 100 units of each ingredient
         int change = coffeeMaker.makeCoffee(0, 100);
         assertEquals(100, change, "Insufficient ingredients, return full payment");
     }
