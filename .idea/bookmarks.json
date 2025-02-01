@@ -1,6 +1,12 @@
 {
   "as2-coffeemaker": [
     {
+      "fileDescriptor": "$/src/main/java/coffee/RecipeBook.java",
+      "linenumber": 59,
+      "name": "recipeArray[recipeToDelete] \u003d new Recipe();",
+      "bookmarkType": "DEFAULT"
+    },
+    {
       "fileDescriptor": "$/src/main/java/coffee/Inventory.java",
       "linenumber": 181,
       "name": "if (amtSugar \u003c\u003d 0) {",
