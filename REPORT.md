@@ -1783,14 +1783,19 @@ public void testEditRecipeSuccess() {
     Recipe newRecipe = new Recipe();
     newRecipe.setName("NewRecipe");
     assertEquals("Recipe1", recipeBook.editRecipe(0, newRecipe), "Recipe1 should be edited");
-    assertEquals(newRecipe, recipeBook.getRecipes()[0], "Recipe1 should be replaced by newRecipe");
+    assertEquals("NewRecipe", newRecipe.getName(), "Recipe1 should be replaced by newRecipe");
 }
 ```
 
 ### Purpose
 This test verifies that the `editRecipe` method successfully replaces a recipe at a valid index and returns the name of the original recipe.
 
-### Execution Report: `PASSED`
+### Execution Report: `FAILED`
+```
+org.opentest4j.AssertionFailedError: Recipe1 should be replaced by newRecipe ==> 
+Expected :NewRecipe
+Actual   :
+```
 
 ---
 
@@ -2006,14 +2011,20 @@ public void testEditRecipeSuccess() {
     coffeeMaker.addRecipe(recipe1);
     Recipe newRecipe = new Recipe();
     newRecipe.setName("NewRecipe");
-    assertEquals("Recipe1", coffeeMaker.editRecipe(0, newRecipe));
+    assertEquals("Recipe1", coffeeMaker.editRecipe(0, newRecipe), "Recipe1 should be edited");
+    assertEquals("NewRecipe", newRecipe.getName(), "Recipe1 should be replaced by newRecipe");
 }
 ```
 
 ### Purpose
 This test ensures that the `editRecipe` method successfully replaces a recipe at a valid index and returns the name of the original recipe.
 
-### Execution Report: `PASSED`
+### Execution Report: `FAILED`
+```
+org.opentest4j.AssertionFailedError: Recipe1 should be replaced by newRecipe ==> 
+Expected :NewRecipe
+Actual   :
+```
 
 ---
 

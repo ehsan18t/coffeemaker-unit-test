@@ -123,7 +123,7 @@ public class RecipeBookTest {
         Recipe newRecipe = new Recipe();
         newRecipe.setName("NewRecipe");
         assertEquals("Recipe1", recipeBook.editRecipe(0, newRecipe), "Recipe1 should be edited");
-        assertEquals(newRecipe, recipeBook.getRecipes()[0], "Recipe1 should be replaced by newRecipe");
+        assertEquals("NewRecipe", newRecipe.getName(), "Recipe1 should be replaced by newRecipe");
     }
 
     @Test

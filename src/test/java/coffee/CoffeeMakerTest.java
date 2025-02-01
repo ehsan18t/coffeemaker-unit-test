@@ -99,7 +99,8 @@ public class CoffeeMakerTest {
         coffeeMaker.addRecipe(recipe1);
         Recipe newRecipe = new Recipe();
         newRecipe.setName("NewRecipe");
-        assertEquals("Recipe1", coffeeMaker.editRecipe(0, newRecipe));
+        assertEquals("Recipe1", coffeeMaker.editRecipe(0, newRecipe), "Recipe1 should be edited");
+        assertEquals("NewRecipe", newRecipe.getName(), "Recipe1 should be replaced by newRecipe");
     }
 
     @Test
