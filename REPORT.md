@@ -1869,8 +1869,8 @@ public void testDefaultValues() {
     String inventory = coffeeMaker.checkInventory();
     assertTrue(inventory.contains("Coffee: 15"));
     assertTrue(inventory.contains("Milk: 15"));
-    assertTrue(inventory.contains("Sugar: 15"));
     assertTrue(inventory.contains("Chocolate: 15"));
+    assertTrue(inventory.contains("Sugar: 15"));
 }
 ```
 
