@@ -1,3 +1,106 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .cover-page {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .title {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        .subtitle {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+        }
+        .info {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .abstract {
+            margin-top: 50px;
+            font-size: 1em;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cover-page">
+        <h1 class="title">SQA Assignment 1</h1>
+        <div class="info" style="text-align: left; margin-left: 16rem">
+            <p>Submitted By: <code>The Debugging Dead</code><br/>
+            <ul>
+              <li>
+                <strong>Md. Ehsan Khan</strong> <code>011201122</code>
+              </li>
+              <li>
+                <strong>Shofi Rayhan Siyam</strong> <code>011201117</code>
+              </li>
+              <li>
+                <strong>Muhammad Rahat Ahasan</strong> <code>011201112</code>
+              </li>
+              <li>
+                <strong>Abdullah Tawhid</strong> <code>011192035</code>
+              </li>
+            </ul>
+            <p>Section: <strong>B</strong></p>
+            <p>Course: <strong>CSE 4495</strong></p>
+            <p>Submitted To: <strong>Md. Mohaiminul Islam</strong></p>
+            <p>Date: <strong>1<sup>st</sup> Feb 2024</strong></p>
+        </div>
+    </div>
+    <div class="abstract">
+        <h1 style="font-size: 1.2em;"><strong>Abstract</strong></h1>
+        <p align="justify">This report presents an in-depth analysis of the application, focusing on the unit testing, code coverage, identified bugs, and corresponding recommended fixes. The unit tests have been executed to ensure the robustness of the system, revealing several critical bugs and areas where the code fails to handle certain edge cases or operational scenarios. The bugs were listed, and the source of each was traced to specific locations within the application. For each issue, a recommended fix has been provided, aiming to resolve the problem while improving the overall reliability and efficiency of the application. Additionally, the coverage report illustrates the areas of the code that are adequately tested, highlighting any gaps in testing that could benefit from further attention.</p>
+    </div>
+</body>
+</html>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+# Index
+- Unit Testing Report ----------------------------------------------------------------------------------------------------------------------- 2
+- Bug Report ------------------------------------------------------------------------------------------------------------------------------- 42
+- Test Coverage Report -------------------------------------------------------------------------------------------------------------------- 45
+
+# Links
+ - Repository: [Github](https://github.com/ehsan18t/coffeemaker-unit-test)
+ - Unit Test (Markdown): [Unit Test Report](https://github.com/ehsan18t/coffeemaker-unit-test/blob/main/Reports/UnitTests.md)
+ - List Of Bugs (Markdown): [List Of Bugs](https://github.com/ehsan18t/coffeemaker-unit-test/blob/main/Reports/ListOfBugs.md)
+ - Branch Coverage (Markdown): [Branch Coverage](https://github.com/ehsan18t/coffeemaker-unit-test/blob/main/Reports/Coverage.md)
+
+
 # Unit Testing Report
 ## Test `RecipeTest::testDefaultValues`
 ### Test ID: `1`
@@ -111,6 +214,8 @@ This test checks that the `setPrice` method throws a `RecipeException` when an i
 
 ---
 
+<br>
+
 ## Test `RecipeTest::testSetPriceZero`
 ### Test ID: `7`
 ### Method
@@ -164,6 +269,8 @@ This test checks that the `setPrice` method throws a `RecipeException` when the 
 ### Execution Report: `PASSED`
 
 ---
+
+<br>
 
 ## Test `RecipeTest::testSetPriceFloatInput`
 ### Test ID: `10`
@@ -2249,3 +2356,294 @@ This test ensures that the `makeCoffee` method returns the full payment when the
 
 ### Execution Report: `PASSED`
 ---
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# **Bug Report**
+
+---
+
+### **1. Incorrect Inventory Initialization**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 1          | N/A             | `Inventory::Inventory` | 18       |
+
+**Description:**
+The `Inventory` constructor initializes the inventory with 15 units of each ingredient, but the fields are declared as `static`. This means that the inventory is shared across all instances of the `Inventory` class, which is not the intended behavior.
+
+**Impact:**
+If multiple instances of the `Inventory` class are created, they will all share the same inventory, leading to incorrect inventory management.
+
+**Recommended Fix:**
+Remove the `static` modifier from the inventory fields to ensure that each instance of the `Inventory` class has its own inventory.
+
+```java
+private int coffee;
+private int milk;
+private int sugar;
+private int chocolate;
+```
+
+---
+
+### **2. Incorrect Inventory Update in `useIngredients` Method**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 2         | 77              | `Inventory::useIngredients` | 220      |
+
+**Description:**
+The `useIngredients` method in the `Inventory` class incorrectly updates the inventory when ingredients are used. Specifically, the method adds the amount of `coffee` instead of subtracting it, which leads to an incorrect inventory count.
+
+**Impact:**
+This bug will cause the inventory to increase when a recipe is made, which is incorrect. This will lead to inaccurate inventory tracking and potential issues when trying to make subsequent recipes.
+
+**Recommended Fix:**
+Modify the `useIngredients` method to correctly subtract the ingredients used from the inventory.
+
+```java
+public synchronized boolean useIngredients(Recipe r) {
+    if (enoughIngredients(r)) {
+        Inventory.coffee -= r.getAmtCoffee();  // Subtract coffee
+        Inventory.milk -= r.getAmtMilk();
+        Inventory.sugar -= r.getAmtSugar();
+        Inventory.chocolate -= r.getAmtChocolate();
+        return true;
+    } else {
+        return false;
+    }
+}
+```
+
+---
+
+### **3. Incorrect Handling of Negative Values in `addSugar` Method**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 3         | 59, 61          | `Inventory::addSugar` | 182      |
+
+**Description:**
+The `addSugar` method in the `Inventory` class incorrectly checks for negative values. The condition `if (amtSugar <= 0)` is used, which allows negative values to be added to the inventory and reject valid positive values. This can lead to incorrect inventory counts.
+
+**Impact:**
+Negative values can be added to the sugar inventory, which can cause the inventory to become incorrect and potentially lead to issues when making recipes.
+
+**Recommended Fix:**
+Modify the `addSugar` method to correctly check for positive values before adding them to the inventory.
+
+```java
+public synchronized void addSugar(String sugar) throws InventoryException {
+    int amtSugar = 0;
+    try {
+        amtSugar = Integer.parseInt(sugar);
+    } catch (NumberFormatException e) {
+        throw new InventoryException("Units of sugar must be a positive integer");
+    }
+    if (amtSugar >= 0) {
+        Inventory.sugar += amtSugar;
+    } else {
+        throw new InventoryException("Units of sugar must be a positive integer");
+    }
+}
+```
+
+---
+
+### **4. Incorrect Recipe Deletion Logic**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 4         | 88              | `RecipeBook::deleteRecipe` | 60       |
+
+**Description:**
+The `deleteRecipe` method in the `RecipeBook` class incorrectly sets the recipe to a new empty `Recipe` object instead of setting it to `null`. This can lead to confusion and potential issues when checking for empty slots in the recipe array.
+
+**Impact:**
+The recipe array will not be properly cleared, and the slot will still contain an empty `Recipe` object instead of being set to `null`. This can cause issues when adding new recipes or checking for available slots.
+
+**Recommended Fix:**
+Modify the `deleteRecipe` method to set the recipe to `null` instead of creating a new `Recipe` object.
+
+```java
+public synchronized String deleteRecipe(int recipeToDelete) {
+    if (recipeArray[recipeToDelete] != null) {
+        String recipeName = recipeArray[recipeToDelete].getName();
+        recipeArray[recipeToDelete] = null; // Set to null instead of new Recipe()
+        return recipeName;
+    } else {
+        return null;
+    }
+}
+```
+
+---
+
+### **5. Incorrect Recipe Editing Logic**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 5         | 92, 103         | `RecipeBook::editRecipe` | 77       |
+
+**Description:**
+The `editRecipe` method in the `RecipeBook` class incorrectly sets the name of the new recipe to an empty string before replacing the existing recipe. This can lead to the loss of the recipe name and potential issues when displaying or referencing the recipe.
+
+**Impact:**
+The recipe name will be lost when editing a recipe, which can cause confusion and issues when trying to reference or display the recipe.
+
+**Recommended Fix:**
+Modify the `editRecipe` method to preserve the name of the new recipe when replacing the existing recipe.
+
+```java
+public synchronized String editRecipe(int recipeToEdit, Recipe newRecipe) {
+    if (recipeArray[recipeToEdit] != null) {
+        String recipeName = recipeArray[recipeToEdit].getName();
+        recipeArray[recipeToEdit] = newRecipe; // Preserve the name of the new recipe
+        return recipeName;
+    } else {
+        return null;
+    }
+}
+```
+
+---
+
+### **6. Inflexible Recipe Array Size**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 6          | N/A             | `RecipeBook::RecipeBook` | 13       |
+
+**Description:**
+The `RecipeBook` constructor initializes the recipe array with a size of 4, but the `NUM_RECIPES` constant is set to 4. This means that the array size is hardcoded and not flexible.
+
+**Impact:**
+If the number of recipes needs to be changed, the code must be modified, which is not ideal for maintainability.
+
+**Recommended Fix:**
+Create an overloaded constructor that takes the number of recipes as a parameter to allow for a flexible array size.
+
+```java
+public RecipeBook() {
+    recipeArray = new Recipe[NUM_RECIPES];
+}
+
+public RecipeBook(int numRecipes) {
+    recipeArray = new Recipe[numRecipes];
+}
+```
+
+---
+
+#### **7. Inconsistent Synchronization in `CoffeeMaker` Class**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line**   |
+|------------|-----------------|-----------------------|------------|
+| 7          | N/A             | `CoffeeMaker::makeCoffee` | 30, 41, 52 |
+
+**Description:**
+The `makeCoffee` method in the `CoffeeMaker` class is synchronized, but other methods that modify shared resources (e.g., `addRecipe`, `deleteRecipe`) are not. This can lead to race conditions in a multi-threaded environment.
+
+**Impact:**
+Inconsistent synchronization can cause race conditions, leading to incorrect behavior when multiple threads access shared resources simultaneously.
+
+**Recommended Fix:**
+Ensure that all methods that modify shared resources are properly synchronized.
+
+```java
+public synchronized boolean addRecipe(Recipe r) {
+    // Existing logic
+}
+
+public synchronized String deleteRecipe(int recipeToDelete) {
+    // Existing logic
+}
+
+public synchronized String editRecipe(int recipeToEdit, Recipe r) {
+    // Existing logic
+}
+```
+
+---
+
+#### **8. Missing empty string Checks in `Recipe` Class**
+| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
+|------------|-----------------|-----------------------|----------|
+| 8          | N/A             | `Recipe::setName`     | 127      |
+
+**Description:**
+The `setName` method in the `Recipe` class does checks if it's null but does not check if the input `name` is empty string. This can lead to recipes with empty names, which may cause issues when displaying or referencing recipes.
+
+**Impact:**
+Recipes with empty names can cause confusion and issues when trying to reference or display them.
+
+**Recommended Fix:**
+Add empty checks in the `setName` method.
+
+```java
+public void setName(String name) {
+    if (name != null && !name.trim().isEmpty()) {
+        this.name = name;
+    } else {
+        throw new IllegalArgumentException("Recipe name cannot be null or empty");
+    }
+}
+```
+
+# Test Coverage Report
+
+This report summarizes the code coverage metrics for various classes in the project. The coverage percentages include metrics for **Class**, **Method**, **Branch**, and **Line** coverage. Below are the results:
+
+## Coverage Overview
+
+| **Class**        | **Class %** | **Method %** | **Branch %** | **Line %**  |
+|------------------|-------------|--------------|--------------|-------------|
+| **CoffeeMaker**  | 100% (1/1)  | 100% (8/8)   | 100% (6/6)   | 95.2% (20/21) |
+| **Inventory**    | 100% (1/1)  | 100% (16/16) | 100% (26/26) | 100% (72/72) |
+| **Recipe**       | 100% (1/1)  | 100% (16/16) | 80.8% (21/26)| 95.2% (60/63) |
+| **RecipeBook**   | 100% (1/1)  | 100% (5/5)   | 100% (16/16) | 100% (26/26) |
+
+---
+
+## Detailed Class Coverage Analysis
+
+### **Recipe**
+
+- **Class Coverage:** 100% (1/1)
+- **Method Coverage:** 100% (16/16)
+- **Branch Coverage:** 80.8% (21/26)
+- **Line Coverage:** 95.2% (60/63)
+
+The **Recipe** class has high coverage in terms of methods and class, but the branch coverage is slightly lower at 80.8%, indicating there might be some untested conditional branches. Line coverage is also very good at 95.2%.
+
+#### Uncovered Branches
+![Freehand Drawing.svg](https://raw.githubusercontent.com/ehsan18t/coffeemaker-unit-test/refs/heads/main/Reports/images/img.png?token=GHSAT0AAAAAACVU7DYH3YEICZGL5IKBXZCWZ46MPMQ)
+
+#### **Improve Branch Coverage in `hashCode` Method**
+ - Test the scenario where `name` is `null`.
+
+#### **Improve Branch Coverage in `equals` Method**
+ - Test the scenario where `obj` is the instance of a different `class`.
+ - Test the scenario where `name` is `null` for `this` but not for `obj`.
