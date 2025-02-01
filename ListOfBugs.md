@@ -2,38 +2,27 @@
 
 ---
 
-### **1. Incorrect Handling of Recipe Addition when Inventory is Full**
+### **1. Inflexible Recipe Array Size**
 | **Bug ID** | **TestCase ID** | **Location**          | **Line** |
 |------------|-----------------|-----------------------|----------|
-| 1         | N/A             | `RecipeBook::addRecipe` | 29       |
+| 1          | N/A             | `RecipeBook::RecipeBook` | 13       |
 
 **Description:**
-The `addRecipe` method in the `RecipeBook` class does not correctly handle the case when the recipe array is full. The current implementation checks if the recipe already exists and then attempts to add it to the first available spot. However, if the array is full, the method will return `false` without providing any feedback to the user about why the recipe could not be added.
+The `RecipeBook` constructor initializes the recipe array with a size of 4, but the `NUM_RECIPES` constant is set to 4. This means that the array size is hardcoded and not flexible.
 
 **Impact:**
-If the recipe array is full, users will not be able to add new recipes, and the system will silently fail without notifying the user. This can lead to confusion and a poor user experience.
+If the number of recipes needs to be changed, the code must be modified, which is not ideal for maintainability.
 
 **Recommended Fix:**
-Modify the `addRecipe` method to check if the recipe array is full before attempting to add a new recipe. If the array is full, return `false` and provide appropriate feedback to the user.
+Create an overloaded constructor that takes the number of recipes as a parameter to allow for a flexible array size.
 
 ```java
-public synchronized boolean addRecipe(Recipe r) {
-    // Check if the recipe already exists in the array
-    for (int i = 0; i < recipeArray.length; i++) {
-        if (r.equals(recipeArray[i])) {
-            return false; // Recipe already exists
-        }
-    }
-    
-    // Check for the first empty spot in the array
-    for (int i = 0; i < recipeArray.length; i++) {
-        if (recipeArray[i] == null) {
-            recipeArray[i] = r;
-            return true; // Recipe added successfully
-        }
-    }
-    
-    return false; // Recipe array is full
+public RecipeBook() {
+    recipeArray = new Recipe[NUM_RECIPES];
+}
+
+public RecipeBook(int numRecipes) {
+    recipeArray = new Recipe[numRecipes];
 }
 ```
 
@@ -42,10 +31,10 @@ public synchronized boolean addRecipe(Recipe r) {
 ### **2. Incorrect Inventory Update in `useIngredients` Method**
 | **Bug ID** | **TestCase ID** | **Location**          | **Line** |
 |------------|-----------------|-----------------------|----------|
-| 2         | N/A             | `Inventory::useIngredients` | 140      |
+| 2         | 77              | `Inventory::useIngredients` | 220      |
 
 **Description:**
-The `useIngredients` method in the `Inventory` class incorrectly updates the inventory when ingredients are used. Specifically, the method adds the amount of coffee instead of subtracting it, which leads to an incorrect inventory count.
+The `useIngredients` method in the `Inventory` class incorrectly updates the inventory when ingredients are used. Specifically, the method adds the amount of `coffee` instead of subtracting it, which leads to an incorrect inventory count.
 
 **Impact:**
 This bug will cause the inventory to increase when a recipe is made, which is incorrect. This will lead to inaccurate inventory tracking and potential issues when trying to make subsequent recipes.
@@ -57,9 +46,9 @@ Modify the `useIngredients` method to correctly subtract the ingredients used fr
 public synchronized boolean useIngredients(Recipe r) {
     if (enoughIngredients(r)) {
         Inventory.coffee -= r.getAmtCoffee();  // Subtract coffee
-        Inventory.milk -= r.getAmtMilk();      // Subtract milk
-        Inventory.sugar -= r.getAmtSugar();    // Subtract sugar
-        Inventory.chocolate -= r.getAmtChocolate(); // Subtract chocolate
+        Inventory.milk -= r.getAmtMilk();
+        Inventory.sugar -= r.getAmtSugar();
+        Inventory.chocolate -= r.getAmtChocolate();
         return true;
     } else {
         return false;
@@ -72,10 +61,10 @@ public synchronized boolean useIngredients(Recipe r) {
 ### **3. Incorrect Handling of Negative Values in `addSugar` Method**
 | **Bug ID** | **TestCase ID** | **Location**          | **Line** |
 |------------|-----------------|-----------------------|----------|
-| 3         | N/A             | `Inventory::addSugar` | 140      |
+| 3         | 59, 61          | `Inventory::addSugar` | 182      |
 
 **Description:**
-The `addSugar` method in the `Inventory` class incorrectly checks for negative values. The condition `if (amtSugar <= 0)` is used, which allows negative values to be added to the inventory. This can lead to incorrect inventory counts.
+The `addSugar` method in the `Inventory` class incorrectly checks for negative values. The condition `if (amtSugar <= 0)` is used, which allows negative values to be added to the inventory and reject valid positive values. This can lead to incorrect inventory counts.
 
 **Impact:**
 Negative values can be added to the sugar inventory, which can cause the inventory to become incorrect and potentially lead to issues when making recipes.
@@ -104,10 +93,10 @@ public synchronized void addSugar(String sugar) throws InventoryException {
 ### **4. Incorrect Recipe Deletion Logic**
 | **Bug ID** | **TestCase ID** | **Location**          | **Line** |
 |------------|-----------------|-----------------------|----------|
-| 4         | N/A             | `RecipeBook::deleteRecipe` | 140      |
+| 4         | 88              | `RecipeBook::deleteRecipe` | 60       |
 
 **Description:**
-The `deleteRecipe` method in the `RecipeBook` class incorrectly sets the recipe to a new `Recipe` object instead of setting it to `null`. This can lead to confusion and potential issues when checking for empty slots in the recipe array.
+The `deleteRecipe` method in the `RecipeBook` class incorrectly sets the recipe to a new empty `Recipe` object instead of setting it to `null`. This can lead to confusion and potential issues when checking for empty slots in the recipe array.
 
 **Impact:**
 The recipe array will not be properly cleared, and the slot will still contain an empty `Recipe` object instead of being set to `null`. This can cause issues when adding new recipes or checking for available slots.
@@ -132,7 +121,7 @@ public synchronized String deleteRecipe(int recipeToDelete) {
 ### **5. Incorrect Recipe Editing Logic**
 | **Bug ID** | **TestCase ID** | **Location**          | **Line** |
 |------------|-----------------|-----------------------|----------|
-| 5         | N/A             | `RecipeBook::editRecipe` | 140      |
+| 5         | 92, 103         | `RecipeBook::editRecipe` | 77       |
 
 **Description:**
 The `editRecipe` method in the `RecipeBook` class incorrectly sets the name of the new recipe to an empty string before replacing the existing recipe. This can lead to the loss of the recipe name and potential issues when displaying or referencing the recipe.
@@ -176,53 +165,6 @@ private int coffee;
 private int milk;
 private int sugar;
 private int chocolate;
-```
-
----
-
-### **7. Incorrect Inventory Check in `enoughIngredients` Method**
-| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
-|------------|-----------------|-----------------------|----------|
-| 7         | N/A             | `Inventory::enoughIngredients` | 140      |
-
-**Description:**
-The `enoughIngredients` method in the `Inventory` class does not correctly check if there are enough ingredients to make a recipe. The method should return `false` if any ingredient is insufficient, but the current implementation may not handle all cases correctly.
-
-**Impact:**
-The method may incorrectly return `true` even if there are not enough ingredients, leading to issues when making recipes.
-
-**Recommended Fix:**
-Modify the `enoughIngredients` method to correctly check if there are enough ingredients for the recipe.
-
-```java
-protected synchronized boolean enoughIngredients(Recipe r) {
-    return Inventory.coffee >= r.getAmtCoffee() &&
-           Inventory.milk >= r.getAmtMilk() &&
-           Inventory.sugar >= r.getAmtSugar() &&
-           Inventory.chocolate >= r.getAmtChocolate();
-}
-```
-
----
-
-### **8. Incorrect Recipe Array Size**
-| **Bug ID** | **TestCase ID** | **Location**          | **Line** |
-|------------|-----------------|-----------------------|----------|
-| 8         | N/A             | `RecipeBook::RecipeBook` | 18       |
-
-**Description:**
-The `RecipeBook` constructor initializes the recipe array with a size of 4, but the `NUM_RECIPES` constant is set to 4. This means that the array size is hardcoded and not flexible.
-
-**Impact:**
-If the number of recipes needs to be changed, the code must be modified, which is not ideal for maintainability.
-
-**Recommended Fix:**
-Use the `NUM_RECIPES` constant to initialize the recipe array size.
-
-```java
-public RecipeBook() {
-    recipeArray = new Recipe[NUM_RECIPES];
-}
 ```
 
 ---
